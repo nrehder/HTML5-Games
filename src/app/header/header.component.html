@@ -1,0 +1,85 @@
+<mat-toolbar color="primary">
+	<mat-toolbar-row style="justify-content: space-between">
+		<div fxHide.gt-xs>
+			<button mat-icon-button (click)="onToggleNavbar()">
+				<mat-icon>menu</mat-icon>
+			</button>
+		</div>
+		<div matBadge="5" matBadgePosition="after below" matBadgeColor="accent">
+			Krimson Sky Games
+		</div>
+		<div fxFlex fxLayout fxLayoutAlign="center" fxHide.xs>
+			<span
+				class="large-toolbar-items"
+				[routerLink]="['/']"
+				routerLinkActive="router-link-active"
+			>
+				Blackjack
+			</span>
+			<span
+				class="large-toolbar-items"
+				[routerLink]="['/minesweeper']"
+				routerLinkActive="router-link-active"
+			>
+				Minesweeper
+			</span>
+			<span
+				class="large-toolbar-items"
+				[routerLink]="['/']"
+				routerLinkActive="router-link-active"
+			>
+				Yahtzee
+			</span>
+			<span
+				class="large-toolbar-items"
+				[routerLink]="['/']"
+				routerLinkActive="router-link-active"
+			>
+				Hangman
+			</span>
+		</div>
+		<mat-slide-toggle
+			[checked]="isDarkTheme | async"
+			(change)="onToggleTheme($event.checked)"
+		>
+			Dark Theme</mat-slide-toggle
+		>
+	</mat-toolbar-row>
+
+	<mat-toolbar-row
+		fxHide.gt-xs
+		*ngIf="navbarOpen"
+		fxLayout="column"
+		class="hamburger"
+		[@fadeInOut]
+	>
+		<span
+			class="small-toolbar-items"
+			[routerLink]="['/']"
+			routerLinkActive="router-link-active"
+		>
+			Blackjack
+		</span>
+		<span
+			class="small-toolbar-items"
+			[routerLink]="['/minesweeper']"
+			routerLinkActive="router-link-active"
+		>
+			Minesweeper
+		</span>
+		<span
+			class="small-toolbar-items"
+			[routerLink]="['/']"
+			routerLinkActive="router-link-active"
+		>
+			Yahtzee
+		</span>
+		<span
+			class="small-toolbar-items"
+			[routerLink]="['/']"
+			routerLinkActive="router-link-active"
+		>
+			Hangman
+		</span>
+	</mat-toolbar-row>
+</mat-toolbar>

@@ -5,7 +5,7 @@ import { RouterModule } from "@angular/router";
 import { MinesweeperComponent } from "./minesweeper.component";
 
 @NgModule({
-	declarations: [],
+	declarations: [MinesweeperComponent],
 	imports: [
 		CommonModule,
 		RouterModule.forChild([{ path: "", component: MinesweeperComponent }]),

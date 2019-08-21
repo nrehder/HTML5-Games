@@ -6,20 +6,21 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 //Components
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
-import { MinesweeperComponent } from "./minesweeper/minesweeper.component";
 
 //Modules
 import { AppRoutingModule } from "./app-routing.module";
 import { MaterialModule } from "./material/material.module";
+import { SnakeModule } from "./snake/snake.module";
 
 @NgModule({
-	declarations: [AppComponent, HeaderComponent, MinesweeperComponent],
+	declarations: [AppComponent, HeaderComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		FlexLayoutModule,
 		MaterialModule,
+		SnakeModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

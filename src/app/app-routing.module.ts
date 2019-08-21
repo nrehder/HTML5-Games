@@ -6,6 +6,7 @@ const routes: Routes = [
 		path: "minesweeper",
 		loadChildren: "./minesweeper/minesweeper.module#MinesweeperModule",
 	},
+	{ path: "snake", loadChildren: "./snake/snake.module#SnakeModule" },
 ];
 
 @NgModule({

@@ -5,17 +5,17 @@
 				<mat-icon>menu</mat-icon>
 			</button>
 		</div>
-		<div matBadge="5" matBadgePosition="after below" matBadgeColor="accent">
+		<div>
 			Krimson Sky Games
 		</div>
 		<div fxFlex fxLayout fxLayoutAlign="center" fxHide.xs>
-			<span
+			<!-- <span
 				class="large-toolbar-items"
 				[routerLink]="['/']"
 				routerLinkActive="router-link-active"
 			>
 				Blackjack
-			</span>
+			</span> -->
 			<span
 				class="large-toolbar-items"
 				[routerLink]="['/minesweeper']"
@@ -24,6 +24,13 @@
 				Minesweeper
 			</span>
 			<span
+				class="large-toolbar-items"
+				[routerLink]="['/snake']"
+				routerLinkActive="router-link-active"
+			>
+				Snake
+			</span>
+			<!-- <span
 				class="large-toolbar-items"
 				[routerLink]="['/']"
 				routerLinkActive="router-link-active"
@@ -36,7 +43,7 @@
 				routerLinkActive="router-link-active"
 			>
 				Hangman
-			</span>
+			</span> -->
 		</div>
 		<mat-slide-toggle
 			[checked]="isDarkTheme | async"

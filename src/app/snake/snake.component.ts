@@ -12,7 +12,13 @@ import {
 	styleUrls: ["./snake.component.scss"],
 })
 export class SnakeComponent implements AfterViewInit {
-	//Canvas Variables
+	//Score Canvas Variables
+	@ViewChild("score", { static: false }) scoreCanvas: ElementRef;
+	scoreContext: CanvasRenderingContext2D;
+	scoreWidth: number;
+	scoreHeight: number;
+
+	//Game Canvas Variables
 	@ViewChild("snake", { static: false }) gameCanvas: ElementRef;
 	gameContext: CanvasRenderingContext2D;
 	width: number;
@@ -27,6 +33,7 @@ export class SnakeComponent implements AfterViewInit {
 		length: number;
 		pieces: { x: number; y: number }[];
 	};
+	score: number;
 	pellet: {
 		x: number;
 		y: number;
@@ -39,11 +46,28 @@ export class SnakeComponent implements AfterViewInit {
 		this.gameContext = (<HTMLCanvasElement>(
 			this.gameCanvas.nativeElement
 		)).getContext("2d");
+
+		//Saves game area info
 		this.height = this.gameCanvas.nativeElement.height;
 		this.width = this.gameCanvas.nativeElement.width;
 		this.gridAmount = 25;
 		this.gridSize = this.height / this.gridAmount;
 
+		//Stores score element reference as a 2D HTML canvas element
+		this.scoreContext = (<HTMLCanvasElement>(
+			this.scoreCanvas.nativeElement
+		)).getContext("2d");
+
+		//Saves score area info
+		this.scoreHeight = this.scoreCanvas.nativeElement.height;
+		this.scoreWidth = this.scoreCanvas.nativeElement.width;
+
+		//Sets default text behavior for scoreboard
+		this.scoreContext.textAlign = "center";
+		this.scoreContext.textBaseline = "middle";
+		this.scoreContext.font = "32px Arial";
+
+		//starts game
 		this.setup();
 	}
 
@@ -59,8 +83,10 @@ export class SnakeComponent implements AfterViewInit {
 			x: 5,
 			y: 5,
 		};
+		this.score = 0;
 		this.playing = true;
 		this.runGame();
+		this.drawScore();
 	}
 
 	runGame() {
@@ -142,9 +168,6 @@ export class SnakeComponent implements AfterViewInit {
 		while (toBePlaced) {
 			x = Math.floor(Math.random() * (this.gridAmount - 2)) + 1;
 			y = Math.floor(Math.random() * (this.gridAmount - 2)) + 1;
-			console.log(x);
-			console.log(y);
-			console.log(this.snake.pieces);
 			for (let i = 0; i < this.snake.pieces.length; i++) {
 				if (
 					this.snake.pieces[i].x !== x &&
@@ -155,6 +178,20 @@ export class SnakeComponent implements AfterViewInit {
 			}
 		}
 		this.pellet = { x, y };
+		this.incrementScore();
+	}
+
+	incrementScore() {
+		this.score += 1;
+		this.drawScore();
+	}
+	drawScore() {
+		this.scoreContext.clearRect(0, 0, this.scoreWidth, this.scoreHeight);
+		this.scoreContext.fillText(
+			this.score.toString(),
+			this.scoreWidth / 2,
+			this.scoreHeight / 2
+		);
 	}
 
 	crash() {

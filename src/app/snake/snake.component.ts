@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	AfterViewInit,
 	ViewChild,
 	ElementRef,
@@ -33,6 +32,7 @@ export class SnakeComponent implements AfterViewInit {
 		y: number;
 	};
 	inverval;
+	playing: boolean;
 
 	ngAfterViewInit() {
 		//Stores the element reference as a 2D HTML canvas element
@@ -59,6 +59,7 @@ export class SnakeComponent implements AfterViewInit {
 			x: 5,
 			y: 5,
 		};
+		this.playing = true;
 		this.runGame();
 	}
 
@@ -87,6 +88,7 @@ export class SnakeComponent implements AfterViewInit {
 			) {
 				this.eatPellet();
 			}
+			this.checkCollision();
 			this.moveSnake();
 		}, 100);
 	}
@@ -95,37 +97,40 @@ export class SnakeComponent implements AfterViewInit {
 		let curPosition = { ...this.snake.pieces[0] };
 		switch (this.snake.direction) {
 			case "up":
-				if (curPosition.y > 0) {
-					curPosition.y -= 1;
-				} else {
-					this.crash();
-				}
+				curPosition.y -= 1;
 				break;
 			case "right":
-				if (curPosition.x + 1 < this.width / this.gridSize) {
-					curPosition.x += 1;
-				} else {
-					this.crash();
-				}
+				curPosition.x += 1;
 				break;
 			case "down":
-				if (curPosition.y + 1 < this.height / this.gridSize) {
-					curPosition.y += 1;
-				} else {
-					this.crash();
-				}
+				curPosition.y += 1;
 				break;
 			case "left":
-				if (curPosition.x > 0) {
-					curPosition.x -= 1;
-				} else {
-					this.crash();
-				}
+				curPosition.x -= 1;
 				break;
 		}
 		this.snake.pieces.unshift(curPosition);
 		if (this.snake.pieces.length > this.snake.length) {
 			this.snake.pieces.pop();
+		}
+	}
+
+	checkCollision() {
+		if (
+			this.snake.pieces[0].x < 0 ||
+			this.snake.pieces[0].x > this.gridAmount - 1 ||
+			this.snake.pieces[0].y < 0 ||
+			this.snake.pieces[0].y > this.gridAmount - 1
+		) {
+			this.crash();
+		}
+		for (let i = 1; i < this.snake.pieces.length; i++) {
+			if (
+				this.snake.pieces[0].x === this.snake.pieces[i].x &&
+				this.snake.pieces[0].y === this.snake.pieces[i].y
+			) {
+				this.crash();
+			}
 		}
 	}
 
@@ -135,8 +140,11 @@ export class SnakeComponent implements AfterViewInit {
 		let x: number;
 		let y: number;
 		while (toBePlaced) {
-			x = Math.floor(Math.random() * this.gridAmount);
-			y = Math.floor(Math.random() * this.gridAmount);
+			x = Math.floor(Math.random() * (this.gridAmount - 2)) + 1;
+			y = Math.floor(Math.random() * (this.gridAmount - 2)) + 1;
+			console.log(x);
+			console.log(y);
+			console.log(this.snake.pieces);
 			for (let i = 0; i < this.snake.pieces.length; i++) {
 				if (
 					this.snake.pieces[i].x !== x &&
@@ -148,33 +156,57 @@ export class SnakeComponent implements AfterViewInit {
 		}
 		this.pellet = { x, y };
 	}
+
 	crash() {
 		//endgame
+		this.playing = false;
+		clearInterval(this.inverval);
+		this.gameContext.fillStyle = "black";
+		this.gameContext.fillRect(0, 0, this.width, this.height);
+		this.gameContext.fillStyle = "white";
+		this.gameContext.textAlign = "center";
+		this.gameContext.textBaseline = "middle";
+		this.gameContext.font = "64px Arial";
+		this.gameContext.fillText(
+			"GAME OVER",
+			this.width / 2,
+			this.height / 2 - 50
+		);
+		this.gameContext.font = "32px Arial";
+		this.gameContext.fillText(
+			"Press any key to continue",
+			this.width / 2,
+			this.height / 2 + 50
+		);
 	}
 
 	@HostListener("document:keydown", ["$event"])
 	onkeypress(event: KeyboardEvent) {
-		switch (event.key) {
-			case "ArrowUp":
-				if (this.snake.direction != "down") {
-					this.snake.direction = "up";
-				}
-				break;
-			case "ArrowDown":
-				if (this.snake.direction != "up") {
-					this.snake.direction = "down";
-				}
-				break;
-			case "ArrowRight":
-				if (this.snake.direction != "left") {
-					this.snake.direction = "right";
-				}
-				break;
-			case "ArrowLeft":
-				if (this.snake.direction != "right") {
-					this.snake.direction = "left";
-				}
-				break;
+		if (this.playing) {
+			switch (event.key) {
+				case "ArrowUp":
+					if (this.snake.direction != "down") {
+						this.snake.direction = "up";
+					}
+					break;
+				case "ArrowDown":
+					if (this.snake.direction != "up") {
+						this.snake.direction = "down";
+					}
+					break;
+				case "ArrowRight":
+					if (this.snake.direction != "left") {
+						this.snake.direction = "right";
+					}
+					break;
+				case "ArrowLeft":
+					if (this.snake.direction != "right") {
+						this.snake.direction = "left";
+					}
+					break;
+			}
+		} else {
+			this.setup();
 		}
 	}
 }

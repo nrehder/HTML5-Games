@@ -160,6 +160,9 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 	//creates and stores an interval to run the game
 	runGame() {
 		this.intervalStore = setInterval(() => {
+			if (this.moveQueue.length > 0) {
+				this.snake.direction = this.moveQueue.pop();
+			}
 			this.gameContext.clearRect(0, 0, this.gameHeight, this.gameWidth);
 			this.drawPellet();
 			this.drawSnake();
@@ -313,31 +316,28 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 		);
 	}
 
-	//changes directions but prevents turning 180
+	//stores the next movement to an array to prevent turning 180.  without the queue, you could press up and right almost simultaneously to turn around
+	moveQueue = [];
 	@HostListener("document:keydown", ["$event"])
 	onkeypress(event: KeyboardEvent) {
 		if (this.playing) {
-			switch (event.key) {
-				case "ArrowUp":
-					if (this.snake.direction != "down") {
-						this.snake.direction = "up";
-					}
-					break;
-				case "ArrowDown":
-					if (this.snake.direction != "up") {
-						this.snake.direction = "down";
-					}
-					break;
-				case "ArrowRight":
-					if (this.snake.direction != "left") {
-						this.snake.direction = "right";
-					}
-					break;
-				case "ArrowLeft":
-					if (this.snake.direction != "right") {
-						this.snake.direction = "left";
-					}
-					break;
+			if (event.key === "ArrowUp" && this.snake.direction != "down") {
+				this.moveQueue[0] = "up";
+			} else if (
+				event.key === "ArrowDown" &&
+				this.snake.direction != "up"
+			) {
+				this.moveQueue[0] = "down";
+			} else if (
+				event.key === "ArrowRight" &&
+				this.snake.direction != "left"
+			) {
+				this.moveQueue[0] = "right";
+			} else if (
+				event.key === "ArrowLeft" &&
+				this.snake.direction != "right"
+			) {
+				this.moveQueue[0] = "left";
 			}
 		} else {
 			this.setup();

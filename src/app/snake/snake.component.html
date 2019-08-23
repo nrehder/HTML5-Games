@@ -1,3 +1,17 @@
-<canvas #score width="50" height="50"></canvas>
-<br />
-<canvas #snake width="500" height="500"></canvas>
+<app-game [title]="title" [description]="description">
+	<canvas
+		[ngClass]="{ 'dark-canvas': darkMode }"
+		class="light-canvas"
+		#score
+		width="50"
+		height="50"
+	></canvas>
+	<br />
+	<canvas
+		[ngClass]="{ 'dark-canvas': darkMode }"
+		class="light-canvas"
+		#snake
+		width="500"
+		height="500"
+	></canvas>
+</app-game>

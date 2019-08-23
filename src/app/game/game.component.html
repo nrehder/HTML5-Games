@@ -1,0 +1,11 @@
+<mat-card>
+	<mat-card-header style="justify-content: center">
+		<mat-card-title>
+			<h1 style="font-size:34px;font-weight: bold">{{ title }}</h1>
+		</mat-card-title>
+	</mat-card-header>
+	<!-- Game canvas is sent here -->
+	<ng-content></ng-content>
+	<br />
+	<mat-card-content><b>Instructions: </b>{{ description }}</mat-card-content>
+</mat-card>

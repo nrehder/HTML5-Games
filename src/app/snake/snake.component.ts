@@ -5,14 +5,30 @@ import {
 	ElementRef,
 	HostListener,
 	OnDestroy,
+	OnInit,
 } from "@angular/core";
+import { Subscription } from "rxjs";
+
+import { ThemeService } from "../shared/services/theme.service";
 
 @Component({
 	selector: "app-snake",
 	templateUrl: "./snake.component.html",
 	styleUrls: ["./snake.component.scss"],
 })
-export class SnakeComponent implements AfterViewInit, OnDestroy {
+export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
+	//Description Info
+	description =
+		"Use arrow keys to control direction snake moves.  Eat pellets to gain points and grow your snake.  Avoid the walls and other parts of your snake.";
+	title = "Snake";
+
+	//Theme info
+	themeSub: Subscription;
+	primaryColor: string;
+	secondaryColor: string;
+	offColor: string;
+	darkMode: boolean;
+
 	//Score Variables
 	@ViewChild("score", { static: false }) scoreCanvas: ElementRef;
 	scoreContext: CanvasRenderingContext2D;
@@ -38,6 +54,31 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 		y: number;
 	};
 	intervalStore;
+
+	constructor(private theme: ThemeService) {}
+
+	ngOnInit() {
+		this.primaryColor = "white";
+		this.secondaryColor = "black";
+		this.offColor = "grey";
+		this.themeSub = this.theme.isDarkTheme.subscribe(mode => {
+			this.darkMode = mode;
+			if (mode) {
+				this.primaryColor = "black";
+				this.secondaryColor = "white";
+			} else {
+				this.primaryColor = "white";
+				this.secondaryColor = "black";
+			}
+			this.drawScore();
+			//updates the current display if the game is not running
+			if (!this.playing) {
+				this.drawPellet();
+				this.drawSnake();
+				this.drawGameOver();
+			}
+		});
+	}
 
 	ngAfterViewInit() {
 		//Stores the element reference as a 2D HTML canvas element
@@ -120,30 +161,17 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 	runGame() {
 		this.intervalStore = setInterval(() => {
 			this.gameContext.clearRect(0, 0, this.gameHeight, this.gameWidth);
-			this.gameContext.fillStyle = "grey";
-			this.gameContext.fillRect(
-				this.pellet.x * this.gridSize,
-				this.pellet.y * this.gridSize,
-				this.gridSize,
-				this.gridSize
-			);
-			this.gameContext.fillStyle = "black";
-			for (let i = 0; i < this.snake.pieces.length; i++) {
-				this.gameContext.fillRect(
-					this.snake.pieces[i].x * this.gridSize,
-					this.snake.pieces[i].y * this.gridSize,
-					this.gridSize,
-					this.gridSize
-				);
-			}
+			this.drawPellet();
+			this.drawSnake();
 			if (
 				this.snake.pieces[0].x === this.pellet.x &&
 				this.snake.pieces[0].y === this.pellet.y
 			) {
 				this.eatPellet();
 			}
-			this.checkCollision();
-			this.moveSnake();
+			if (!this.checkCollision()) {
+				this.moveSnake();
+			}
 		}, 100);
 	}
 
@@ -170,6 +198,19 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 		}
 	}
 
+	//Triggers whenever the head of the snake goes over a pellet
+	eatPellet() {
+		this.snake.length += 1;
+		this.placePallet();
+		this.incrementScore();
+	}
+
+	//increases the score and the updates the scoreboard
+	incrementScore() {
+		this.scoreValue += 1;
+		this.drawScore();
+	}
+
 	//checks to see if there is a collision
 	checkCollision() {
 		if (
@@ -179,6 +220,7 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 			this.snake.pieces[0].y > this.gameGridAmount - 1
 		) {
 			this.crash();
+			return true;
 		}
 		for (let i = 1; i < this.snake.pieces.length; i++) {
 			if (
@@ -186,15 +228,10 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 				this.snake.pieces[0].y === this.snake.pieces[i].y
 			) {
 				this.crash();
+				return true;
 			}
 		}
-	}
-
-	//Triggers whenever the head of the snake goes over a pellet
-	eatPellet() {
-		this.snake.length += 1;
-		this.placePallet();
-		this.incrementScore();
+		return false;
 	}
 
 	//Randomly places pellet in area not on edge of playable area and not where
@@ -218,15 +255,17 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 		this.pellet = { x, y };
 	}
 
-	//increases the score and the updates the scoreboard
-	incrementScore() {
-		this.scoreValue += 1;
-		this.drawScore();
+	//clears the board and displays game over screen; stops interval
+	crash() {
+		this.playing = false;
+		clearInterval(this.intervalStore);
+		this.drawGameOver();
 	}
 
 	//updates the scoreboard; made its own fn to be able to set initial score
 	drawScore() {
 		this.scoreContext.clearRect(0, 0, this.scoreWidth, this.scoreHeight);
+		this.scoreContext.fillStyle = this.secondaryColor;
 		this.scoreContext.fillText(
 			this.scoreValue.toString(),
 			this.scoreWidth / 2,
@@ -234,13 +273,32 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 		);
 	}
 
-	//clears the board and displays game over screen; stops interval
-	crash() {
-		this.playing = false;
-		clearInterval(this.intervalStore);
-		this.gameContext.fillStyle = "black";
-		this.gameContext.fillRect(0, 0, this.gameWidth, this.gameHeight);
-		this.gameContext.fillStyle = "white";
+	//Draws all pieces of snake
+	drawSnake() {
+		this.gameContext.fillStyle = this.secondaryColor;
+		for (let i = 0; i < this.snake.pieces.length; i++) {
+			this.gameContext.fillRect(
+				this.snake.pieces[i].x * this.gridSize,
+				this.snake.pieces[i].y * this.gridSize,
+				this.gridSize,
+				this.gridSize
+			);
+		}
+	}
+
+	//Draws the pellet
+	drawPellet() {
+		this.gameContext.fillStyle = this.offColor;
+		this.gameContext.fillRect(
+			this.pellet.x * this.gridSize,
+			this.pellet.y * this.gridSize,
+			this.gridSize,
+			this.gridSize
+		);
+	}
+
+	//Draws the game over screen
+	drawGameOver() {
 		this.gameContext.font = "64px Arial";
 		this.gameContext.fillText(
 			"GAME OVER",
@@ -289,5 +347,6 @@ export class SnakeComponent implements AfterViewInit, OnDestroy {
 	//ensures interval is removed on navigating away
 	ngOnDestroy() {
 		clearInterval(this.intervalStore);
+		this.themeSub.unsubscribe();
 	}
 }

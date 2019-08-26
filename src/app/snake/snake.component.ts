@@ -17,17 +17,20 @@ import { ThemeService } from "../shared/services/theme.service";
 	styleUrls: ["./snake.component.scss"],
 })
 export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
-	//Description Info
+	//Description Variables
 	description =
 		"Use arrow keys to control direction snake moves.  Eat pellets to gain points and grow your snake.  Avoid the walls and other parts of your snake.";
 	title = "Snake";
 
-	//Theme info
+	//Theme Variables
 	themeSub: Subscription;
 	primaryColor: string;
 	secondaryColor: string;
 	offColor: string;
 	darkMode: boolean;
+
+	//Container Variables
+	@ViewChild("gameContainer", { static: true }) gameContainer: ElementRef;
 
 	//Score Variables
 	@ViewChild("score", { static: false }) scoreCanvas: ElementRef;
@@ -39,10 +42,11 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 	//Game Variables
 	@ViewChild("snake", { static: false }) gameCanvas: ElementRef;
 	gameContext: CanvasRenderingContext2D;
-	gameWidth: number;
-	gameHeight: number;
+	gameCanvasWidth: number;
+	gameCanvasHeight: number;
 	gridSize: number;
-	gameGridAmount: number;
+	gameHorizontalAmount: number;
+	gameVerticalAmount: number;
 	playing: boolean;
 	snake: {
 		direction: string;
@@ -81,16 +85,8 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngAfterViewInit() {
-		//Stores the element reference as a 2D HTML canvas element
-		this.gameContext = (<HTMLCanvasElement>(
-			this.gameCanvas.nativeElement
-		)).getContext("2d");
-
-		//Saves game area info
-		this.gameHeight = this.gameCanvas.nativeElement.height;
-		this.gameWidth = this.gameCanvas.nativeElement.width;
-		this.gameGridAmount = 25;
-		this.gridSize = this.gameHeight / this.gameGridAmount;
+		this.initializeGameCanvas();
+		this.initializeGameplayArea();
 
 		//Stores score element reference as a 2D HTML canvas element
 		this.scoreContext = (<HTMLCanvasElement>(
@@ -110,6 +106,41 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		//starts game
 		this.setup();
+	}
+
+	/*
+	Initially stores the element reference as a 2D HTML canvas element.
+	Then scales the size depending on screen size
+	*/
+	initializeGameCanvas() {
+		this.gameContext = (<HTMLCanvasElement>(
+			this.gameCanvas.nativeElement
+		)).getContext("2d");
+
+		if (window.innerHeight > 450) {
+			this.gameCanvas.nativeElement.height =
+				Math.floor((window.innerHeight - 350) / 100) * 100;
+		}
+		if (window.innerWidth > 200) {
+			this.gameCanvas.nativeElement.width =
+				Math.floor((window.innerWidth - 100) / 100) * 100;
+		}
+
+		this.gameCanvasHeight = this.gameCanvas.nativeElement.height;
+		this.gameCanvasWidth = this.gameCanvas.nativeElement.width;
+	}
+
+	//Takes game canvas and sets up the game grid based on smallest side
+	initializeGameplayArea() {
+		if (this.gameCanvasHeight > this.gameCanvasWidth) {
+			this.gameHorizontalAmount = 25;
+			this.gridSize = this.gameCanvasWidth / this.gameHorizontalAmount;
+			this.gameVerticalAmount = this.gameCanvasHeight / this.gridSize;
+		} else {
+			this.gameVerticalAmount = 25;
+			this.gridSize = this.gameCanvasHeight / this.gameVerticalAmount;
+			this.gameHorizontalAmount = this.gameCanvasWidth / this.gridSize;
+		}
 	}
 
 	setup() {
@@ -136,8 +167,8 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		//splaces snake anywhere but the edge
 		this.snake.pieces.push({
-			x: Math.floor(Math.random() * (this.gameGridAmount - 2)) + 1,
-			y: Math.floor(Math.random() * (this.gameGridAmount - 2)) + 1,
+			x: Math.floor(Math.random() * (this.gameHorizontalAmount - 2)) + 1,
+			y: Math.floor(Math.random() * (this.gameVerticalAmount - 2)) + 1,
 		});
 
 		/*
@@ -146,10 +177,10 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 		*/
 		let possibleDirections = [];
 		if (this.snake.pieces[0].x > 4) possibleDirections.push("left");
-		if (this.snake.pieces[0].x < this.gameGridAmount - 5)
+		if (this.snake.pieces[0].x < this.gameHorizontalAmount - 5)
 			possibleDirections.push("right");
 		if (this.snake.pieces[0].y > 4) possibleDirections.push("up");
-		if (this.snake.pieces[0].y < this.gameGridAmount - 5)
+		if (this.snake.pieces[0].y < this.gameVerticalAmount - 5)
 			possibleDirections.push("down");
 		this.snake.direction =
 			possibleDirections[
@@ -163,7 +194,12 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 			if (this.moveQueue.length > 0) {
 				this.snake.direction = this.moveQueue.pop();
 			}
-			this.gameContext.clearRect(0, 0, this.gameHeight, this.gameWidth);
+			this.gameContext.clearRect(
+				0,
+				0,
+				this.gameCanvasWidth,
+				this.gameCanvasHeight
+			);
 			this.drawPellet();
 			this.drawSnake();
 			if (
@@ -218,9 +254,9 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 	checkCollision() {
 		if (
 			this.snake.pieces[0].x < 0 ||
-			this.snake.pieces[0].x > this.gameGridAmount - 1 ||
+			this.snake.pieces[0].x > this.gameHorizontalAmount - 1 ||
 			this.snake.pieces[0].y < 0 ||
-			this.snake.pieces[0].y > this.gameGridAmount - 1
+			this.snake.pieces[0].y > this.gameVerticalAmount - 1
 		) {
 			this.crash();
 			return true;
@@ -244,8 +280,8 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 		let x: number;
 		let y: number;
 		while (toBePlaced) {
-			x = Math.floor(Math.random() * (this.gameGridAmount - 2)) + 1;
-			y = Math.floor(Math.random() * (this.gameGridAmount - 2)) + 1;
+			x = Math.floor(Math.random() * (this.gameHorizontalAmount - 2)) + 1;
+			y = Math.floor(Math.random() * (this.gameVerticalAmount - 2)) + 1;
 			for (let i = 0; i < this.snake.pieces.length; i++) {
 				if (
 					this.snake.pieces[i].x !== x &&
@@ -302,17 +338,26 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	//Draws the game over screen
 	drawGameOver() {
-		this.gameContext.font = "64px Arial";
+		let largeFont = "64px Arial";
+		let smallFont = "32px Arial";
+		let separation = 50;
+		if (this.gameCanvasWidth < 400) {
+			largeFont = "32px Arial";
+			smallFont = "16px Arial";
+			separation = 25;
+		}
+
+		this.gameContext.font = largeFont;
 		this.gameContext.fillText(
 			"GAME OVER",
-			this.gameWidth / 2,
-			this.gameHeight / 2 - 50
+			this.gameCanvasWidth / 2,
+			this.gameCanvasHeight / 2 - separation
 		);
-		this.gameContext.font = "32px Arial";
+		this.gameContext.font = smallFont;
 		this.gameContext.fillText(
 			"Press any key to continue",
-			this.gameWidth / 2,
-			this.gameHeight / 2 + 50
+			this.gameCanvasWidth / 2,
+			this.gameCanvasHeight / 2 + separation
 		);
 	}
 

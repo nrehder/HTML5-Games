@@ -1,17 +1,17 @@
 <app-game [title]="title" [description]="description">
-	<svg width="300" height="300">
+	<svg #test>
 		<rect
-			width="300"
-			height="300"
-			style="fill:rgb(230, 230, 230);stroke-width:10;stroke:rgb(0,0,0)"
+		height="300" width="300"
+			x="10"
+			y="10"
+			style="fill:rgb(230, 230, 230);stroke:rgb(0,0,0)"
 		></rect>
 		<text
-			x="150"
-			y="150"
+			x="10"
+			y="10"
 			fill="black"
-			text-anchor="middle"
-			alignment-baseline="central"
-			font-size="250px"
+			text-anchor="start"
+			alignment-baseline="hanging"
 		>
 			5
 		</text>

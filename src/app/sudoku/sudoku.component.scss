@@ -1,3 +1,24 @@
 svg {
 	cursor: default;
 }
+
+@mixin styling($rect-height,$border-radius){
+	svg{
+		height: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
+		width: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
+	}
+	rect{
+		height: $rect-height;
+		width: $rect-height;
+		stroke-width:$border-radius;
+	}
+	text{
+		font-size: calc(0.8*(#{$rect-height} + #{$border-radius} + #{$border-radius}))
+	}
+}
+@media screen and (max-width:600px){
+	@include styling(100px, 5px)
+}
+@media screen and (min-width:601px){
+	@include styling(300px, 10px)
+}

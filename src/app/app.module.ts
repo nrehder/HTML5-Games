@@ -13,6 +13,7 @@ import { GameComponent } from "./game/game.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { MaterialModule } from "./material/material.module";
 import { MinesweeperComponent } from "./minesweeper/minesweeper.component";
+import { SudokuComponent } from './sudoku/sudoku.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +22,7 @@ import { MinesweeperComponent } from "./minesweeper/minesweeper.component";
 		GameComponent,
 		SnakeComponent,
 		MinesweeperComponent,
+		SudokuComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,19 +1,19 @@
 <app-game [title]="title" [description]="description">
-	<svg #test>
-		<rect
-		height="300" width="300"
-			x="10"
-			y="10"
-			style="fill:rgb(230, 230, 230);stroke:rgb(0,0,0)"
-		></rect>
-		<text
-			x="10"
-			y="10"
-			fill="black"
-			text-anchor="start"
-			alignment-baseline="hanging"
-		>
-			5
-		</text>
-	</svg>
+	<div id="play-area">
+		<div id="top-row" fxFlex fxLayout>
+			<div id="top-left"></div>
+			<div id="top-middle"></div>
+			<div id="top-right"></div>
+		</div>
+		<div id="middle-row" fxFlex fxLayout>
+			<div id="middle-left"></div>
+			<div id="middle-middle"></div>
+			<div id="middle-right"></div>
+		</div>
+		<div id="bottom-row" fxFlex fxLayout>
+			<div id="bottom-left"></div>
+			<div id="bottom-middle"></div>
+			<div id="bottom-right"></div>
+		</div>
+	</div>
 </app-game>

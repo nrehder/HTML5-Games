@@ -2,23 +2,99 @@ svg {
 	cursor: default;
 }
 
-@mixin styling($rect-height,$border-radius){
-	svg{
-		height: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
-		width: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
-	}
-	rect{
-		height: $rect-height;
-		width: $rect-height;
-		stroke-width:$border-radius;
-	}
-	text{
-		font-size: calc(0.8*(#{$rect-height} + #{$border-radius} + #{$border-radius}))
-	}
+#play-area {
+	width: 600px;
+	height: 600px;
+	background-color: lightblue;
+	flex-wrap: wrap;
 }
-@media screen and (max-width:600px){
-	@include styling(100px, 5px)
+#top-left {
+	width: 200px;
+	height: 200px;
+	background-color: lightcyan;
+	border-bottom: 5px black solid;
+	border-right: 5px black solid;
 }
-@media screen and (min-width:601px){
-	@include styling(300px, 10px)
+#top-middle {
+	width: 200px;
+	height: 200px;
+	background-color: lightcoral;
+	border-left: 5px black solid;
+	border-bottom: 5px black solid;
+	border-right: 5px black solid;
 }
+#top-right {
+	width: 200px;
+	height: 200px;
+	background-color: lightgoldenrodyellow;
+	border-left: 5px black solid;
+	border-bottom: 5px black solid;
+}
+#middle-left {
+	width: 200px;
+	height: 200px;
+	background-color: lightgray;
+	border-top: 5px black solid;
+	border-right: 5px black solid;
+	border-bottom: 5px black solid;
+}
+#middle-middle {
+	width: 200px;
+	height: 200px;
+	background-color: lightgreen;
+	border-top: 5px black solid;
+	border-right: 5px black solid;
+	border-bottom: 5px black solid;
+	border-left: 5px black solid;
+}
+#middle-right {
+	width: 200px;
+	height: 200px;
+	background-color: lightpink;
+	border-top: 5px black solid;
+	border-bottom: 5px black solid;
+	border-left: 5px black solid;
+}
+#bottom-left {
+	width: 200px;
+	height: 200px;
+	background-color: lightsalmon;
+	border-top: 5px black solid;
+	border-right: 5px black solid;
+}
+#bottom-middle {
+	width: 200px;
+	height: 200px;
+	background-color: lightseagreen;
+	border-top: 5px black solid;
+	border-right: 5px black solid;
+	border-left: 5px black solid;
+}
+#bottom-right {
+	width: 200px;
+	height: 200px;
+	background-color: lightskyblue;
+	border-top: 5px black solid;
+	border-left: 5px black solid;
+}
+
+// @mixin styling($rect-height,$border-radius){
+// 	svg{
+// 		height: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
+// 		width: calc( #{$rect-height} + #{$border-radius} + #{$border-radius} );
+// 	}
+// 	rect{
+// 		height: $rect-height;
+// 		width: $rect-height;
+// 		stroke-width:$border-radius;
+// 	}
+// 	text{
+// 		font-size: calc(0.8*(#{$rect-height} + #{$border-radius} + #{$border-radius}))
+// 	}
+// }
+// @media screen and (max-width:600px){
+// 	@include styling(100px, 5px)
+// }
+// @media screen and (min-width:601px){
+// 	@include styling(300px, 10px)
+// }

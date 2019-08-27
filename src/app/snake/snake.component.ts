@@ -117,14 +117,15 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.gameCanvas.nativeElement
 		)).getContext("2d");
 
-		if (window.innerHeight > 450) {
-			this.gameCanvas.nativeElement.height =
-				Math.floor((window.innerHeight - 350) / 100) * 100;
-		}
-		if (window.innerWidth > 200) {
-			this.gameCanvas.nativeElement.width =
-				Math.floor((window.innerWidth - 100) / 100) * 100;
-		}
+		this.gameCanvas.nativeElement.height = Math.max(
+			Math.floor((window.innerHeight - 350) / 100) * 100,
+			300
+		);
+
+		this.gameCanvas.nativeElement.width = Math.max(
+			Math.floor((window.innerWidth - 100) / 100) * 100,
+			300
+		);
 
 		this.gameCanvasHeight = this.gameCanvas.nativeElement.height;
 		this.gameCanvasWidth = this.gameCanvas.nativeElement.width;

@@ -3,79 +3,34 @@ svg {
 }
 
 #play-area {
-	width: 600px;
-	height: 600px;
-	background-color: lightblue;
-	flex-wrap: wrap;
+	width: 895px;
+	height: 895px;
+	margin: auto;
 }
-#top-left {
-	width: 200px;
-	height: 200px;
-	background-color: lightcyan;
-	border-bottom: 5px black solid;
-	border-right: 5px black solid;
+.cell {
+	height: 95px;
+	width: 95px;
+	box-sizing: border-box;
+	justify-content: center;
 }
-#top-middle {
-	width: 200px;
-	height: 200px;
-	background-color: lightcoral;
-	border-left: 5px black solid;
-	border-bottom: 5px black solid;
-	border-right: 5px black solid;
+.light-grey {
+	background-color: lightgrey;
 }
-#top-right {
-	width: 200px;
-	height: 200px;
-	background-color: lightgoldenrodyellow;
-	border-left: 5px black solid;
-	border-bottom: 5px black solid;
+.black {
+	background-color: black !important;
 }
-#middle-left {
-	width: 200px;
-	height: 200px;
-	background-color: lightgray;
-	border-top: 5px black solid;
-	border-right: 5px black solid;
-	border-bottom: 5px black solid;
+.values {
+	margin: auto 0;
+	width: 100%;
+	text-align: center;
+	line-height: 95px;
+	font-size: 50px;
 }
-#middle-middle {
-	width: 200px;
-	height: 200px;
-	background-color: lightgreen;
-	border-top: 5px black solid;
-	border-right: 5px black solid;
-	border-bottom: 5px black solid;
-	border-left: 5px black solid;
+.given {
+	color: blue;
 }
-#middle-right {
-	width: 200px;
-	height: 200px;
-	background-color: lightpink;
-	border-top: 5px black solid;
-	border-bottom: 5px black solid;
-	border-left: 5px black solid;
-}
-#bottom-left {
-	width: 200px;
-	height: 200px;
-	background-color: lightsalmon;
-	border-top: 5px black solid;
-	border-right: 5px black solid;
-}
-#bottom-middle {
-	width: 200px;
-	height: 200px;
-	background-color: lightseagreen;
-	border-top: 5px black solid;
-	border-right: 5px black solid;
-	border-left: 5px black solid;
-}
-#bottom-right {
-	width: 200px;
-	height: 200px;
-	background-color: lightskyblue;
-	border-top: 5px black solid;
-	border-left: 5px black solid;
+.player {
+	color: black;
 }
 
 // @mixin styling($rect-height,$border-radius){
@@ -93,7 +48,7 @@ svg {
 // 	}
 // }
 // @media screen and (max-width:600px){
-// 	@include styling(100px, 5px)
+// 	@include styling(100px, 2px)
 // }
 // @media screen and (min-width:601px){
 // 	@include styling(300px, 10px)

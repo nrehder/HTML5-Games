@@ -119,12 +119,12 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		this.gameCanvas.nativeElement.height = Math.max(
 			Math.floor((window.innerHeight - 350) / 100) * 100,
-			300
+			200
 		);
 
 		this.gameCanvas.nativeElement.width = Math.max(
 			Math.floor((window.innerWidth - 100) / 100) * 100,
-			300
+			200
 		);
 
 		this.gameCanvasHeight = this.gameCanvas.nativeElement.height;

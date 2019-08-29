@@ -1,71 +1,42 @@
 <mat-toolbar color="primary">
 	<mat-toolbar-row style="justify-content: space-between">
-		<div fxHide.gt-xs>
+		<div fxHide.gt-sm>
 			<button mat-icon-button (click)="onToggleNavbar()">
 				<mat-icon>menu</mat-icon>
 			</button>
 		</div>
-		<div>
+		<div fxHide.gt-sm>
 			Krimson Sky Games
 		</div>
-		<div fxFlex fxLayout fxLayoutAlign="center" fxHide.xs>
-			<span
-				class="large-toolbar-items"
-				[routerLink]="['/sudoku']"
-				routerLinkActive="router-link-active"
-			>
-				Sudoku
-			</span>
-			<span
-				class="large-toolbar-items"
-				[routerLink]="['/snake']"
-				routerLinkActive="router-link-active"
-			>
-				Snake
-			</span>
+		<div fxHide.sm fxHide.xs style="font-size:32px;">
+			Krimson Sky Games
+		</div>
+		<div fxHide.sm fxHide.xs>
+			<app-links layout="row"></app-links>
 		</div>
 		<mat-slide-toggle
+			fxHide.sm
+			fxHide.xs
 			[checked]="isDarkTheme | async"
 			(change)="onToggleTheme($event.checked)"
 		>
 			Dark Theme</mat-slide-toggle
 		>
+		<mat-slide-toggle
+			fxHide.gt-sm
+			[checked]="isDarkTheme | async"
+			(change)="onToggleTheme($event.checked)"
+		>
+			Dark</mat-slide-toggle
+		>
 	</mat-toolbar-row>
 
 	<mat-toolbar-row
-		fxHide.gt-xs
+		fxHide.gt-sm
 		*ngIf="navbarOpen"
-		fxLayout="column"
 		class="hamburger"
 		[@fadeInOut]
 	>
-		<span
-			class="small-toolbar-items"
-			[routerLink]="['/']"
-			routerLinkActive="router-link-active"
-		>
-			Blackjack
-		</span>
-		<span
-			class="small-toolbar-items"
-			[routerLink]="['/minesweeper']"
-			routerLinkActive="router-link-active"
-		>
-			Minesweeper
-		</span>
-		<span
-			class="small-toolbar-items"
-			[routerLink]="['/']"
-			routerLinkActive="router-link-active"
-		>
-			Yahtzee
-		</span>
-		<span
-			class="small-toolbar-items"
-			[routerLink]="['/']"
-			routerLinkActive="router-link-active"
-		>
-			Hangman
-		</span>
+		<app-links layout="column" style="width:100%"></app-links>
 	</mat-toolbar-row>
 </mat-toolbar>

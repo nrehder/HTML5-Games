@@ -1,0 +1,32 @@
+<div fxLayout="{{ layout }}">
+	<span
+		[ngClass]="{
+			'col-items': layout === 'column',
+			'row-items': layout === 'row'
+		}"
+		[routerLink]="['/sudoku']"
+		routerLinkActive="router-link-active"
+	>
+		Sudoku
+	</span>
+	<span
+		[ngClass]="{
+			'col-items': layout === 'column',
+			'row-items': layout === 'row'
+		}"
+		[routerLink]="['/snake']"
+		routerLinkActive="router-link-active"
+	>
+		Snake
+	</span>
+	<span
+		[ngClass]="{
+			'col-items': layout === 'column',
+			'row-items': layout === 'row'
+		}"
+		[routerLink]="['/minesweeper']"
+		routerLinkActive="router-link-active"
+	>
+		Minesweeper
+	</span>
+</div>

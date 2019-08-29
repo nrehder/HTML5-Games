@@ -7,13 +7,11 @@ app-header {
 @media (max-width: 599px) {
 	.content {
 		top: 56px;
-		height: calc(100% - 56px);
 	}
 }
 @media (min-width: 600px) {
 	.content {
 		top: 64px;
-		height: calc(100% - 64px);
 	}
 }
 .content {

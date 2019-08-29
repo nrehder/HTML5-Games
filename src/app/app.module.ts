@@ -14,6 +14,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { MaterialModule } from "./material/material.module";
 import { MinesweeperComponent } from "./minesweeper/minesweeper.component";
 import { SudokuComponent } from './sudoku/sudoku.component';
+import { LinksComponent } from './header/links/links.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import { SudokuComponent } from './sudoku/sudoku.component';
 		SnakeComponent,
 		MinesweeperComponent,
 		SudokuComponent,
+		LinksComponent,
 	],
 	imports: [
 		BrowserModule,

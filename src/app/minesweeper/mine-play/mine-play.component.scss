@@ -1,0 +1,22 @@
+.play-area {
+	overflow-x: auto;
+	min-width: 400px;
+}
+.play-row {
+	width: 400px;
+	margin: auto;
+}
+.cell {
+	height: 20px;
+	width: 20px;
+}
+.cell.covered {
+	background-image: url("../../../assets/minesweeper/tile.ico");
+	background-repeat: no-repeat;
+	background-size: 20px 20px;
+	cursor: pointer;
+}
+.cell.revealed {
+	background-color: lightblue;
+	cursor: default;
+}

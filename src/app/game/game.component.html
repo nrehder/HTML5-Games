@@ -10,5 +10,8 @@
 	<!-- Game canvas is sent here -->
 	<ng-content></ng-content>
 	<br />
-	<mat-card-content><b>Instructions: </b>{{ description }}</mat-card-content>
+	<mat-card-content>
+		<b>Instructions: </b>{{ description }}
+		<a href="{{ link }}" target="_blank">{{ link }}</a>
+	</mat-card-content>
 </mat-card>

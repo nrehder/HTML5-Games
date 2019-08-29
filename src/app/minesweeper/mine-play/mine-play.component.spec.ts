@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayingComponent } from './playing.component';
+import { MinePlayComponent } from './mine-play.component';
 
-describe('PlayingComponent', () => {
-  let component: PlayingComponent;
-  let fixture: ComponentFixture<PlayingComponent>;
+describe('MinePlayComponent', () => {
+  let component: MinePlayComponent;
+  let fixture: ComponentFixture<MinePlayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayingComponent ]
+      declarations: [ MinePlayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayingComponent);
+    fixture = TestBed.createComponent(MinePlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

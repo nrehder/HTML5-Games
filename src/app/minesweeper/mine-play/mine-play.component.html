@@ -1,0 +1,33 @@
+<div class="score-area"></div>
+
+<div class="play-area">
+	<div
+		*ngFor="let row of mineServ.board; let i = index"
+		fxLayout="row wrap"
+		class="play-row"
+	>
+		<div
+			*ngFor="let cell of row; let j = index"
+			fxLayout="row"
+			fxLayoutAlign="center space-around"
+			class="cell"
+			[ngClass]="{ revealed: cell.clicked, covered: !cell.clicked }"
+			(contextmenu)="onFlag(i, j)"
+			(click)="onReveal(i, j)"
+		>
+			<img
+				src="..\..\..\assets\minesweeper\flag.ico"
+				alt=""
+				style="height:20px;width:20px"
+				*ngIf="cell.flag"
+			/>
+			<img
+				src="..\..\..\assets\minesweeper\mine.ico"
+				alt=""
+				style="height:20px;width:20px"
+				*ngIf="cell.mine && mineServ.explode"
+			/>
+			<p *ngIf="cell.clicked && cell.number > 0">{{ cell.number }}</p>
+		</div>
+	</div>
+</div>

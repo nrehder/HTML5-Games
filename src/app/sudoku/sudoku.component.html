@@ -42,8 +42,10 @@
 							class="values"
 							[ngClass]="{
 								player: cell.source === 'player',
-								given: cell.source === 'given'
+								given: cell.source === 'given',
+								invalid: cell.invalid
 							}"
+							*ngIf="cell.value > 0"
 						>
 							{{ cell.value }}
 						</p>
@@ -51,123 +53,5 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- <div class="big top left" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[0][0] }}</div>
-			<div class="small top center">{{ boardState[0][1] }}</div>
-			<div class="small top right">{{ boardState[0][2] }}</div>
-
-			<div class="small middle left">{{ boardState[0][3] }}</div>
-			<div class="small middle center">{{ boardState[0][4] }}</div>
-			<div class="small middle right">{{ boardState[0][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[0][6] }}</div>
-			<div class="small bottom center">{{ boardState[0][7] }}</div>
-			<div class="small bottom right">{{ boardState[0][8] }}</div>
-		</div>
-		<div class="big top center" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[1][0] }}</div>
-			<div class="small top center">{{ boardState[1][1] }}</div>
-			<div class="small top right">{{ boardState[1][2] }}</div>
-
-			<div class="small middle left">{{ boardState[1][3] }}</div>
-			<div class="small middle center">{{ boardState[1][4] }}</div>
-			<div class="small middle right">{{ boardState[1][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[1][6] }}</div>
-			<div class="small bottom center">{{ boardState[1][7] }}</div>
-			<div class="small bottom right">{{ boardState[1][8] }}</div>
-		</div>
-		<div class="big top right" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[2][0] }}</div>
-			<div class="small top center">{{ boardState[2][1] }}</div>
-			<div class="small top right">{{ boardState[2][2] }}</div>
-
-			<div class="small middle left">{{ boardState[2][3] }}</div>
-			<div class="small middle center">{{ boardState[2][4] }}</div>
-			<div class="small middle right">{{ boardState[2][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[2][6] }}</div>
-			<div class="small bottom center">{{ boardState[2][7] }}</div>
-			<div class="small bottom right">{{ boardState[2][8] }}</div>
-		</div>
-		<div class="big middle left" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[3][0] }}</div>
-			<div class="small top center">{{ boardState[3][1] }}</div>
-			<div class="small top right">{{ boardState[3][2] }}</div>
-
-			<div class="small middle left">{{ boardState[3][3] }}</div>
-			<div class="small middle center">{{ boardState[3][4] }}</div>
-			<div class="small middle right">{{ boardState[3][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[3][6] }}</div>
-			<div class="small bottom center">{{ boardState[3][7] }}</div>
-			<div class="small bottom right">{{ boardState[3][8] }}</div>
-		</div>
-		<div class="big middle center" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[4][0] }}</div>
-			<div class="small top center">{{ boardState[4][1] }}</div>
-			<div class="small top right">{{ boardState[4][2] }}</div>
-
-			<div class="small middle left">{{ boardState[4][3] }}</div>
-			<div class="small middle center">{{ boardState[4][4] }}</div>
-			<div class="small middle right">{{ boardState[4][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[4][6] }}</div>
-			<div class="small bottom center">{{ boardState[4][7] }}</div>
-			<div class="small bottom right">{{ boardState[4][8] }}</div>
-		</div>
-		<div class="big middle right" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[5][0] }}</div>
-			<div class="small top center">{{ boardState[5][1] }}</div>
-			<div class="small top right">{{ boardState[5][2] }}</div>
-
-			<div class="small middle left">{{ boardState[5][3] }}</div>
-			<div class="small middle center">{{ boardState[5][4] }}</div>
-			<div class="small middle right">{{ boardState[5][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[5][6] }}</div>
-			<div class="small bottom center">{{ boardState[5][7] }}</div>
-			<div class="small bottom right">{{ boardState[5][8] }}</div>
-		</div>
-		<div class="big bottom left" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[6][0] }}</div>
-			<div class="small top center">{{ boardState[6][1] }}</div>
-			<div class="small top right">{{ boardState[6][2] }}</div>
-
-			<div class="small middle left">{{ boardState[6][3] }}</div>
-			<div class="small middle center">{{ boardState[6][4] }}</div>
-			<div class="small middle right">{{ boardState[6][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[6][6] }}</div>
-			<div class="small bottom center">{{ boardState[6][7] }}</div>
-			<div class="small bottom right">{{ boardState[6][8] }}</div>
-		</div>
-		<div class="big bottom center" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[7][0] }}</div>
-			<div class="small top center">{{ boardState[7][1] }}</div>
-			<div class="small top right">{{ boardState[7][2] }}</div>
-
-			<div class="small middle left">{{ boardState[7][3] }}</div>
-			<div class="small middle center">{{ boardState[7][4] }}</div>
-			<div class="small middle right">{{ boardState[7][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[7][6] }}</div>
-			<div class="small bottom center">{{ boardState[7][7] }}</div>
-			<div class="small bottom right">{{ boardState[7][8] }}</div>
-		</div>
-		<div class="big bottom right" fxLayout="row wrap">
-			<div class="small top left">{{ boardState[8][0] }}</div>
-			<div class="small top center">{{ boardState[8][1] }}</div>
-			<div class="small top right">{{ boardState[8][2] }}</div>
-
-			<div class="small middle left">{{ boardState[8][3] }}</div>
-			<div class="small middle center">{{ boardState[8][4] }}</div>
-			<div class="small middle right">{{ boardState[8][5] }}</div>
-
-			<div class="small bottom left">{{ boardState[8][6] }}</div>
-			<div class="small bottom center">{{ boardState[8][7] }}</div>
-			<div class="small bottom right">{{ boardState[8][8] }}</div>
-		</div> -->
 	</div>
 </app-game>

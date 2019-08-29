@@ -1,10 +1,10 @@
-import { Component, AfterViewInit } from "@angular/core";
+import { Component, AfterViewInit, OnInit } from "@angular/core";
 
 @Component({
 	selector: "app-minesweeper",
 	templateUrl: "./minesweeper.component.html",
 	styleUrls: ["./minesweeper.component.scss"],
 })
-export class MinesweeperComponent implements AfterViewInit {
-	ngAfterViewInit() {}
+export class MinesweeperComponent implements OnInit {
+	ngOnInit() {}
 }

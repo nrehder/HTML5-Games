@@ -15,6 +15,8 @@ import { MaterialModule } from "./material/material.module";
 import { MinesweeperComponent } from "./minesweeper/minesweeper.component";
 import { SudokuComponent } from './sudoku/sudoku.component';
 import { LinksComponent } from './header/links/links.component';
+import { MenuComponent } from './minesweeper/menu/menu.component';
+import { PlayingComponent } from './minesweeper/playing/playing.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +27,8 @@ import { LinksComponent } from './header/links/links.component';
 		MinesweeperComponent,
 		SudokuComponent,
 		LinksComponent,
+		MenuComponent,
+		PlayingComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -6,13 +6,9 @@ import { VariableMessageService } from "./variable-message.service";
 	templateUrl: "./variable-message.component.html",
 	styleUrls: ["./variable-message.component.scss"],
 })
-export class VariableMessageComponent implements OnInit {
+export class VariableMessageComponent {
 	constructor(public vmService: VariableMessageService) {}
 	@Input() dark: boolean;
-
-	ngOnInit() {
-		console.log(this.dark);
-	}
 
 	onCancel() {
 		this.vmService.message = "";

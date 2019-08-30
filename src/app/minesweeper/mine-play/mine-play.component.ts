@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MinesweeperService } from "../minesweeper.service";
+import { VariableMessageService } from "src/app/shared/variable-message/variable-message.service";
+import { take } from "rxjs/operators";
 
 @Component({
 	selector: "app-mine-play",
@@ -7,7 +9,10 @@ import { MinesweeperService } from "../minesweeper.service";
 	styleUrls: ["./mine-play.component.scss"],
 })
 export class MinePlayComponent implements OnInit {
-	constructor(public mineServ: MinesweeperService) {}
+	constructor(
+		public mineServ: MinesweeperService,
+		private vmService: VariableMessageService
+	) {}
 
 	ngOnInit() {
 		//set to 20 by 20 with 5 mines
@@ -21,5 +26,13 @@ export class MinePlayComponent implements OnInit {
 	onReveal(row: number, col: number) {
 		this.mineServ.onReveal(row, col);
 		return false;
+	}
+	onRestart() {
+		this.vmService.message = "Are you sure you want to restart the game?";
+		this.vmService.choice.pipe(take(1)).subscribe(res => {
+			if (res === "confirm") {
+				this.mineServ.createBoard(20, 20, 10);
+			}
+		});
 	}
 }

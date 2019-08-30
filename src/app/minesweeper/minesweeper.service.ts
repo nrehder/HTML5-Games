@@ -4,12 +4,17 @@ import { Injectable } from "@angular/core";
 	providedIn: "root",
 })
 export class MinesweeperService {
-	playing: boolean = true;
+	//Game Variables
+	displayGame: boolean = true;
+	playing: boolean = false;
+	win: boolean = false;
 	explode: boolean = false;
+	totalMines: number = 0;
+	flags: number = 0;
 
+	//Board Variables
 	totalRows: number;
 	totalCols: number;
-	totalMines: number;
 	board: {
 		mine: boolean;
 		flag: boolean;
@@ -18,9 +23,11 @@ export class MinesweeperService {
 	}[][];
 
 	createBoard(rowNum: number, colNum: number, mines: number) {
+		this.playing = true;
 		this.totalRows = rowNum;
 		this.totalCols = colNum;
 		this.totalMines = mines;
+		this.flags = 0;
 		this.board = [];
 		for (let row = 0; row < this.totalRows; row++) {
 			this.board.push([]);
@@ -37,18 +44,48 @@ export class MinesweeperService {
 	}
 
 	onFlag(row: number, col: number) {
-		this.board[row][col].flag = !this.board[row][col].flag;
+		if (this.board[row][col].flag && this.playing) {
+			this.board[row][col].flag = false;
+			this.flags--;
+		} else {
+			this.board[row][col].flag = true;
+			this.flags++;
+		}
 	}
 
 	onReveal(row: number, col: number) {
-		if (!this.board[row][col].flag) {
+		if (!this.board[row][col].flag && this.playing) {
 			if (!this.checkMines(row, col)) {
 				this.board[row][col].clicked = true;
 				if (this.board[row][col].number === 0) {
 					this.onCascade(row, col);
 				}
+				this.checkRemaining();
 			}
 		}
+	}
+
+	private checkRemaining() {
+		let count = 0;
+		for (let row = 0; row < this.totalRows; row++) {
+			for (let col = 0; col < this.totalCols; col++) {
+				if (this.board[row][col].clicked) {
+					count++;
+				}
+			}
+		}
+		if (count === this.totalRows * this.totalCols - this.totalMines) {
+			this.winGame();
+		}
+	}
+
+	private winGame() {
+		this.win = true;
+		this.playing = false;
+	}
+
+	private loseGame() {
+		this.playing = false;
 	}
 
 	private placeMines(mines: number) {
@@ -91,10 +128,12 @@ export class MinesweeperService {
 	private checkMines(row: number, col: number) {
 		if (this.board[row][col].mine) {
 			this.explode = true;
+			this.loseGame();
 			return true;
 		}
 		return false;
 	}
+
 	private onCascade(row: number, col: number) {
 		let checked = {};
 		let firstKey = row * 1000 + col;

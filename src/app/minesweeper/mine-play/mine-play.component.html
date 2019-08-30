@@ -1,4 +1,18 @@
-<div class="score-area"></div>
+<div class="score-area">
+	<h1 *ngIf="!mineServ.win && !mineServ.explode">
+		{{ mineServ.totalMines - mineServ.flags }}
+	</h1>
+	<img
+		src="..\..\..\assets\minesweeper\smiley.svg"
+		style="height:32px;width:32px"
+		*ngIf="mineServ.win"
+	/>
+	<img
+		src="..\..\..\assets\minesweeper\lose_face.svg"
+		style="height:32px;width:32px"
+		*ngIf="mineServ.explode"
+	/>
+</div>
 
 <div class="play-area">
 	<div

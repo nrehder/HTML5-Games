@@ -1,4 +1,4 @@
 <app-game [title]="title" [description]="description" [link]="link">
-	<app-mine-play *ngIf="mineServ.playing"></app-mine-play>
-	<app-mine-menu *ngIf="!mineServ.playing"></app-mine-menu>
+	<app-mine-play *ngIf="mineServ.displayGame"></app-mine-play>
+	<app-mine-menu *ngIf="!mineServ.displayGame"></app-mine-menu>
 </app-game>

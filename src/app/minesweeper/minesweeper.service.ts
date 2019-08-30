@@ -84,10 +84,6 @@ export class MinesweeperService {
 		this.playing = false;
 	}
 
-	private loseGame() {
-		this.playing = false;
-	}
-
 	private placeMines(mines: number) {
 		for (let i = 0; i < mines; i++) {
 			let row = Math.floor(Math.random() * this.totalRows);
@@ -128,7 +124,7 @@ export class MinesweeperService {
 	private checkMines(row: number, col: number) {
 		if (this.board[row][col].mine) {
 			this.explode = true;
-			this.loseGame();
+			this.playing = false;
 			return true;
 		}
 		return false;

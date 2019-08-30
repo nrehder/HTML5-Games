@@ -1,6 +1,10 @@
-<div [ngClass]="{ 'dark-theme': isDarkTheme | async }">
+<div [ngClass]="{ 'dark-theme': isDarkTheme }" class="mat-typography">
 	<app-header class="mat-elevation-z6"></app-header>
-	<div class="mat-app-background mat-typography content">
+	<div class="mat-app-background content">
 		<router-outlet></router-outlet>
 	</div>
+	<app-variable-message
+		*ngIf="vmService.message"
+		[dark]="isDarkTheme"
+	></app-variable-message>
 </div>

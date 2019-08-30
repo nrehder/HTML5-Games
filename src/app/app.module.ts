@@ -17,6 +17,7 @@ import { SudokuComponent } from "./sudoku/sudoku.component";
 import { LinksComponent } from "./header/links/links.component";
 import { MinePlayComponent } from "./minesweeper/mine-play/mine-play.component";
 import { MineMenuComponent } from "./minesweeper/mine-menu/mine-menu.component";
+import { VariableMessageComponent } from "./shared/variable-message/variable-message.component";
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { MineMenuComponent } from "./minesweeper/mine-menu/mine-menu.component";
 		LinksComponent,
 		MinePlayComponent,
 		MineMenuComponent,
+		VariableMessageComponent,
 	],
 	imports: [
 		BrowserModule,

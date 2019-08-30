@@ -1,0 +1,12 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<div class="alert-box" [ngClass]="{ dark: dark, light: !dark }">
+	<p>{{ vmService.message }}</p>
+	<div>
+		<button mat-raised-button color="primary" (click)="onConfirm()">
+			Confirm
+		</button>
+		<button mat-raised-button color="warn" (click)="onCancel()">
+			Cancel
+		</button>
+	</div>
+</div>

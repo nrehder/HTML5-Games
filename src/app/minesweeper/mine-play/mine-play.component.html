@@ -1,17 +1,24 @@
-<div class="score-area">
-	<h1 *ngIf="!mineServ.win && !mineServ.explode">
-		{{ mineServ.totalMines - mineServ.flags }}
-	</h1>
-	<img
-		src="..\..\..\assets\minesweeper\smiley.svg"
-		style="height:32px;width:32px"
-		*ngIf="mineServ.win"
-	/>
-	<img
-		src="..\..\..\assets\minesweeper\lose_face.svg"
-		style="height:32px;width:32px"
-		*ngIf="mineServ.explode"
-	/>
+<div class="controls">
+	<button
+		mat-raised-button
+		[color]="mineServ.explode ? 'warn' : 'primary'"
+		class="score-area"
+		(click)="onNewGame()"
+	>
+		<h1 *ngIf="!mineServ.win && !mineServ.explode" style="margin:0">
+			{{ mineServ.totalMines - mineServ.flags }}
+		</h1>
+		<img
+			src="..\..\..\assets\minesweeper\smiley.svg"
+			style="height:32px;width:32px"
+			*ngIf="mineServ.win"
+		/>
+		<img
+			src="..\..\..\assets\minesweeper\lose_face.svg"
+			style="height:32px;width:32px"
+			*ngIf="mineServ.explode"
+		/>
+	</button>
 </div>
 
 <div class="play-area">
@@ -53,4 +60,7 @@
 	<button mat-raised-button color="accent" (click)="onNewGame()">
 		New Game
 	</button>
+	<!-- <button mat-raised-button color="warn" (click)="onRevealBoard()">
+		Reveal Board
+	</button> -->
 </div>

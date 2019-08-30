@@ -16,7 +16,7 @@ export class MinePlayComponent implements OnInit {
 
 	ngOnInit() {
 		//set to 20 by 20 with 5 mines
-		this.mineServ.createBoard(20, 20, 10);
+		this.mineServ.startGame();
 	}
 
 	onFlag(row: number, col: number) {
@@ -37,13 +37,17 @@ export class MinePlayComponent implements OnInit {
 		// });
 	}
 	onNewGame() {
-		this.vmService.message =
-			"Are you sure you want to start a new game with the same settings?";
-		this.vmService.choice.pipe(take(1)).subscribe(res => {
-			if (res === "confirm") {
-				//go to mine-menu
-				this.mineServ.createBoard(20, 20, 10);
-			}
-		});
+		if (this.mineServ.playing) {
+			this.vmService.message =
+				"Are you sure you want to start a new game with the same settings?";
+			this.vmService.choice.pipe(take(1)).subscribe(res => {
+				if (res === "confirm") {
+					//go to mine-menu
+					this.mineServ.startGame();
+				}
+			});
+		} else {
+			this.mineServ.startGame();
+		}
 	}
 }

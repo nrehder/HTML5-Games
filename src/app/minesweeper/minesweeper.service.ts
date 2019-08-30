@@ -9,12 +9,15 @@ export class MinesweeperService {
 	playing: boolean = false;
 	win: boolean = false;
 	explode: boolean = false;
-	totalMines: number = 0;
-	flags: number = 0;
+	started: boolean = false;
+
+	//Game Settings
+	totalMines: number = 100;
+	totalRows: number = 20;
+	totalCols: number = 20;
 
 	//Board Variables
-	totalRows: number;
-	totalCols: number;
+	flags: number = 0;
 	board: {
 		mine: boolean;
 		flag: boolean;
@@ -22,25 +25,15 @@ export class MinesweeperService {
 		number: number;
 	}[][];
 
-	createBoard(rowNum: number, colNum: number, mines: number) {
+	//resets game variables before creating a new board
+	startGame() {
 		this.playing = true;
-		this.totalRows = rowNum;
-		this.totalCols = colNum;
-		this.totalMines = mines;
+		this.win = false;
+		this.explode = false;
 		this.flags = 0;
+		this.started = false;
 		this.board = [];
-		for (let row = 0; row < this.totalRows; row++) {
-			this.board.push([]);
-			for (let col = 0; col < this.totalCols; col++) {
-				this.board[row].push({
-					mine: false,
-					flag: false,
-					clicked: false,
-					number: 0,
-				});
-			}
-		}
-		this.placeMines(mines);
+		this.createBoard();
 	}
 
 	onFlag(row: number, col: number) {
@@ -54,15 +47,53 @@ export class MinesweeperService {
 	}
 
 	onReveal(row: number, col: number) {
-		if (!this.board[row][col].flag && this.playing) {
-			if (!this.checkMines(row, col)) {
-				this.board[row][col].clicked = true;
-				if (this.board[row][col].number === 0) {
-					this.onCascade(row, col);
+		//prevents first click from revealing a mine
+		if (!this.started) {
+			if (this.board[row][col].mine) {
+				let moving = true;
+				while (moving) {
+					let newRow = Math.floor(Math.random() * this.totalRows);
+					let newCol = Math.floor(Math.random() * this.totalCols);
+					if (!this.board[newRow][newCol].mine) {
+						this.board[row][col].mine = false;
+						this.board[newRow][newCol].mine = true;
+						moving = false;
+						this.setNumbers();
+					}
 				}
-				this.checkRemaining();
+			}
+
+			this.started = true;
+		}
+
+		if (
+			!this.board[row][col].flag &&
+			this.playing &&
+			!this.board[row][col].clicked &&
+			!this.checkMines(row, col)
+		) {
+			if (this.board[row][col].number === 0) {
+				this.onCascade(row, col);
+			} else {
+				this.board[row][col].clicked = true;
+			}
+			this.checkRemaining();
+		}
+	}
+
+	private createBoard() {
+		for (let row = 0; row < this.totalRows; row++) {
+			this.board.push([]);
+			for (let col = 0; col < this.totalCols; col++) {
+				this.board[row].push({
+					mine: false,
+					flag: false,
+					clicked: false,
+					number: 0,
+				});
 			}
 		}
+		this.placeMines();
 	}
 
 	private checkRemaining() {
@@ -75,21 +106,17 @@ export class MinesweeperService {
 			}
 		}
 		if (count === this.totalRows * this.totalCols - this.totalMines) {
-			this.winGame();
+			this.win = true;
+			this.playing = false;
 		}
 	}
 
-	private winGame() {
-		this.win = true;
-		this.playing = false;
-	}
-
-	private placeMines(mines: number) {
-		for (let i = 0; i < mines; i++) {
+	private placeMines() {
+		for (let i = 0; i < this.totalMines; i++) {
 			let row = Math.floor(Math.random() * this.totalRows);
 			let col = Math.floor(Math.random() * this.totalCols);
 			if (this.board[row][col].mine) {
-				continue;
+				i--;
 			} else {
 				this.board[row][col].mine = true;
 			}

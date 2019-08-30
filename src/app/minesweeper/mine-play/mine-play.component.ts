@@ -27,10 +27,21 @@ export class MinePlayComponent implements OnInit {
 		this.mineServ.onReveal(row, col);
 		return false;
 	}
-	onRestart() {
-		this.vmService.message = "Are you sure you want to restart the game?";
+	onMenu() {
+		this.mineServ.displayGame = false;
+		// this.vmService.message = "Are you sure you want to go to the game?";
+		// this.vmService.choice.pipe(take(1)).subscribe(res => {
+		// 	if (res === "confirm") {
+
+		// 	}
+		// });
+	}
+	onNewGame() {
+		this.vmService.message =
+			"Are you sure you want to start a new game with the same settings?";
 		this.vmService.choice.pipe(take(1)).subscribe(res => {
 			if (res === "confirm") {
+				//go to mine-menu
 				this.mineServ.createBoard(20, 20, 10);
 			}
 		});

@@ -1,1 +1,26 @@
-<p>mine-menu works!</p>
+<div class="start-menu" [ngClass]="{ dark: isDarkTheme, light: !isDarkTheme }">
+	<br />
+	<button
+		mat-raised-button
+		color="accent"
+		(click)="onContinue()"
+		[disabled]="!mineServ.playing"
+	>
+		Continue Game
+	</button>
+	<br />
+	<h3>Start a New Game:</h3>
+	<p style="font-size:10px;">This will lose your current game</p>
+	<button mat-raised-button color="primary" (click)="onEasy()">Easy</button>
+	<p>9x9 grid with 10 mines</p>
+	<button mat-raised-button color="primary" (click)="onMedium()">
+		Medium
+	</button>
+	<p>16x16 grid with 40 mines</p>
+	<button mat-raised-button color="primary" (click)="onHard()">Hard</button>
+	<p>30x16 grid with 99 mines</p>
+	<button mat-raised-button color="accent" (click)="onCustom()">
+		Custom
+	</button>
+	<br />
+</div>

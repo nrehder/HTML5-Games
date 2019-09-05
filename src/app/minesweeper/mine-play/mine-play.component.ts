@@ -14,10 +14,7 @@ export class MinePlayComponent implements OnInit {
 		private vmService: VariableMessageService
 	) {}
 
-	ngOnInit() {
-		//set to 20 by 20 with 5 mines
-		this.mineServ.startGame();
-	}
+	ngOnInit() {}
 
 	onFlag(row: number, col: number) {
 		this.mineServ.onFlag(row, col);
@@ -29,12 +26,6 @@ export class MinePlayComponent implements OnInit {
 	}
 	onMenu() {
 		this.mineServ.displayGame = false;
-		// this.vmService.message = "Are you sure you want to go to the game?";
-		// this.vmService.choice.pipe(take(1)).subscribe(res => {
-		// 	if (res === "confirm") {
-
-		// 	}
-		// });
 	}
 	onNewGame() {
 		if (this.mineServ.playing) {
@@ -43,11 +34,11 @@ export class MinePlayComponent implements OnInit {
 			this.vmService.choice.pipe(take(1)).subscribe(res => {
 				if (res === "confirm") {
 					//go to mine-menu
-					this.mineServ.startGame();
+					this.mineServ.resetGame();
 				}
 			});
 		} else {
-			this.mineServ.startGame();
+			this.mineServ.resetGame();
 		}
 	}
 }

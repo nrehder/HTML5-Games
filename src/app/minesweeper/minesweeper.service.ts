@@ -4,17 +4,20 @@ import { Injectable } from "@angular/core";
 	providedIn: "root",
 })
 export class MinesweeperService {
+	//Display Variables
+	iconSize: number = 20;
+
 	//Game Variables
-	displayGame: boolean = true;
+	displayGame: boolean = false;
 	playing: boolean = false;
 	win: boolean = false;
 	explode: boolean = false;
 	started: boolean = false;
 
 	//Game Settings
-	totalMines: number = 100;
-	totalRows: number = 20;
-	totalCols: number = 20;
+	totalMines: number;
+	totalRows: number;
+	totalCols: number;
 
 	//Board Variables
 	flags: number = 0;
@@ -25,8 +28,18 @@ export class MinesweeperService {
 		number: number;
 	}[][];
 
-	//resets game variables before creating a new board
-	startGame() {
+	//Takes in the number of rows/columns/mines and creates a new game
+	startGame(row, col, mine) {
+		this.totalRows = row;
+		this.totalCols = col;
+		this.totalMines = mine;
+		this.displayGame = true;
+
+		this.resetGame();
+	}
+
+	//resets the game with the same settings
+	resetGame() {
 		this.playing = true;
 		this.win = false;
 		this.explode = false;
@@ -34,6 +47,13 @@ export class MinesweeperService {
 		this.started = false;
 		this.board = [];
 		this.createBoard();
+	}
+
+	//loads game from local storage
+	continueGame() {
+		if (this.playing) {
+			this.displayGame = true;
+		}
 	}
 
 	onFlag(row: number, col: number) {

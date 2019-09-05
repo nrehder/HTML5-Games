@@ -24,13 +24,14 @@
 <div class="play-area">
 	<div
 		*ngFor="let row of mineServ.board; let i = index"
-		fxLayout="row wrap"
+		fxLayout="row"
 		class="play-row"
 	>
 		<div
 			*ngFor="let cell of row; let j = index"
 			fxLayout="row"
 			fxLayoutAlign="center space-around"
+			fxFlex="0 0 auto"
 			class="cell"
 			[ngClass]="{ revealed: cell.clicked, covered: !cell.clicked }"
 			(contextmenu)="onFlag(i, j)"

@@ -1,0 +1,24 @@
+button {
+	display: block;
+	margin: 0 auto;
+}
+h3,
+p {
+	margin: 6px 0 12px;
+	justify-content: center;
+	text-align: center;
+}
+.start-menu {
+	width: 50%;
+	min-width: 200px;
+	border-radius: 5px;
+	margin: auto;
+}
+.dark {
+	background-color: darkgrey;
+	border: gainsboro solid 1px;
+}
+.light {
+	background-color: lightgrey;
+	border: grey solid 1px;
+}

@@ -18,6 +18,7 @@ import { LinksComponent } from "./header/links/links.component";
 import { MinePlayComponent } from "./minesweeper/mine-play/mine-play.component";
 import { MineMenuComponent } from "./minesweeper/mine-menu/mine-menu.component";
 import { VariableMessageComponent } from "./shared/variable-message/variable-message.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,7 @@ import { VariableMessageComponent } from "./shared/variable-message/variable-mes
 	],
 	imports: [
 		BrowserModule,
+		FormsModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		FlexLayoutModule,

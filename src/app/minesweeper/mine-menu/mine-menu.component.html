@@ -1,26 +1,97 @@
 <div class="start-menu" [ngClass]="{ dark: isDarkTheme, light: !isDarkTheme }">
-	<br />
-	<button
-		mat-raised-button
-		color="accent"
-		(click)="onContinue()"
-		[disabled]="!mineServ.playing"
-	>
-		Continue Game
-	</button>
-	<br />
-	<h3>Start a New Game:</h3>
-	<p style="font-size:10px;">This will lose your current game</p>
-	<button mat-raised-button color="primary" (click)="onEasy()">Easy</button>
-	<p>9x9 grid with 10 mines</p>
-	<button mat-raised-button color="primary" (click)="onMedium()">
-		Medium
-	</button>
-	<p>16x16 grid with 40 mines</p>
-	<button mat-raised-button color="primary" (click)="onHard()">Hard</button>
-	<p>30x16 grid with 99 mines</p>
-	<button mat-raised-button color="accent" (click)="onCustom()">
-		Custom
-	</button>
-	<br />
+	<div *ngIf="!custom">
+		<br />
+		<button
+			mat-raised-button
+			color="accent"
+			(click)="onContinue()"
+			[disabled]="!mineServ.playing"
+		>
+			Continue Game
+		</button>
+		<br />
+		<h3>Start a New Game:</h3>
+		<p class="small">This will lose your current game</p>
+		<button mat-raised-button color="primary" (click)="onEasy()">
+			Easy
+		</button>
+		<p>9x9 grid with 10 mines</p>
+		<button mat-raised-button color="primary" (click)="onMedium()">
+			Medium
+		</button>
+		<p>16x16 grid with 40 mines</p>
+		<button mat-raised-button color="primary" (click)="onHard()">
+			Hard
+		</button>
+		<p>30x16 grid with 99 mines</p>
+		<button mat-raised-button color="accent" (click)="onCustom()">
+			Custom
+		</button>
+		<br />
+	</div>
+	<div *ngIf="custom">
+		<h3>Custom Game</h3>
+		<form
+			#custGameForm="ngForm"
+			(ngSubmit)="onSubmitForm(custGameForm.value)"
+		>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<label for="row" class="custom-label">Rows</label>
+				<mat-slider
+					id="row"
+					min="9"
+					max="24"
+					step="1"
+					name="row"
+					[(ngModel)]="custRow"
+					(input)="updateRow($event.value)"
+				>
+				</mat-slider>
+				<p class="custom-p">{{ custRow }}</p>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<label for="col" class="custom-label">Cols</label>
+				<mat-slider
+					id="col"
+					min="9"
+					max="30"
+					step="1"
+					name="col"
+					[(ngModel)]="custCol"
+					(input)="updateCol($event.value)"
+				>
+				</mat-slider>
+				<p class="custom-p">{{ custCol }}</p>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<label for="mine" class="custom-label">Mines</label>
+				<mat-slider
+					id="mine"
+					min="10"
+					[max]="maxMines"
+					step="1"
+					name="mine"
+					[(ngModel)]="custMines"
+					(input)="updateMine($event.value)"
+				>
+				</mat-slider>
+				<p class="custom-p">{{ custMines }}</p>
+			</div>
+			<br />
+			<div fxLayout="row">
+				<button type="submit" mat-raised-button color="primary">
+					Submit
+				</button>
+				<button
+					type="button"
+					mat-raised-button
+					color="warn"
+					(click)="onCancel()"
+				>
+					Cancel
+				</button>
+			</div>
+		</form>
+		<br />
+	</div>
 </div>

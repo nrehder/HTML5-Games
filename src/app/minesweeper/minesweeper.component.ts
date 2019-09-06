@@ -14,5 +14,12 @@ export class MinesweeperComponent implements OnInit {
 	title = "Minesweeper";
 
 	constructor(public mineServ: MinesweeperService) {}
-	ngOnInit() {}
+	ngOnInit() {
+		if (
+			localStorage.getItem("minesweeper_board") &&
+			localStorage.getItem("minesweeper_variables")
+		) {
+			this.mineServ.loadGame();
+		}
+	}
 }

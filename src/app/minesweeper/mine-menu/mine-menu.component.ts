@@ -15,6 +15,11 @@ export class MineMenuComponent implements OnInit, OnDestroy {
 	) {}
 	isDarkTheme: boolean;
 	isDarkSub: Subscription;
+	custom: boolean;
+	custRow: number = 9;
+	custCol: number = 9;
+	custMines: number = 10;
+	maxMines: number = 64;
 
 	ngOnInit() {
 		this.isDarkSub = this.themeService.isDarkTheme.subscribe(res => {
@@ -42,5 +47,33 @@ export class MineMenuComponent implements OnInit, OnDestroy {
 		this.mineServ.startGame(16, 30, 99);
 	}
 
-	onCustom() {}
+	onCustom() {
+		this.custom = true;
+	}
+
+	onSubmitForm(data: { row: number; col: number; mine: number }) {
+		this.mineServ.startGame(data.row, data.col, data.mine);
+	}
+
+	onCancel() {
+		this.custom = false;
+	}
+
+	updateRow(data) {
+		this.custRow = data;
+		this.updateMaxMine();
+	}
+
+	updateCol(data) {
+		this.custCol = data;
+		this.updateMaxMine();
+	}
+
+	updateMine(data) {
+		this.custMines = data;
+	}
+
+	updateMaxMine() {
+		this.maxMines = Math.floor(0.8 * this.custRow * this.custCol);
+	}
 }

@@ -9,12 +9,12 @@
 			{{ mineServ.totalMines - mineServ.flags }}
 		</h1>
 		<img
-			src="..\..\..\assets\minesweeper\smiley.svg"
+			src="assets\minesweeper\smiley.svg"
 			style="height:32px;width:32px"
 			*ngIf="mineServ.win"
 		/>
 		<img
-			src="..\..\..\assets\minesweeper\lose_face.svg"
+			src="assets\minesweeper\lose_face.svg"
 			style="height:32px;width:32px"
 			*ngIf="mineServ.explode"
 		/>
@@ -60,13 +60,13 @@
 			(click)="onReveal(i, j)"
 		>
 			<img
-				src="..\..\..\assets\minesweeper\flag.ico"
+				src="assets\minesweeper\flag.ico"
 				alt=""
 				style="height:20px;width:20px"
 				*ngIf="cell.flag"
 			/>
 			<img
-				src="..\..\..\assets\minesweeper\mine.ico"
+				src="assets\minesweeper\mine.ico"
 				alt=""
 				style="height:20px;width:20px"
 				*ngIf="cell.mine && mineServ.explode"

@@ -19,7 +19,6 @@ import { MinePlayComponent } from "./minesweeper/mine-play/mine-play.component";
 import { MineMenuComponent } from "./minesweeper/mine-menu/mine-menu.component";
 import { VariableMessageComponent } from "./shared/variable-message/variable-message.component";
 import { FormsModule } from "@angular/forms";
-import { LongPressDirective } from './shared/directives/long-press.directive';
 
 @NgModule({
 	declarations: [
@@ -33,7 +32,6 @@ import { LongPressDirective } from './shared/directives/long-press.directive';
 		MinePlayComponent,
 		MineMenuComponent,
 		VariableMessageComponent,
-		LongPressDirective,
 	],
 	imports: [
 		BrowserModule,

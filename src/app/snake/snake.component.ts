@@ -362,25 +362,35 @@ export class SnakeComponent implements OnInit, AfterViewInit, OnDestroy {
 		);
 	}
 
-	//stores the next movement to an array to prevent turning 180.  without the queue, you could press up and right almost simultaneously to turn around
-	moveQueue = [];
 	@HostListener("document:keydown", ["$event"])
 	onkeypress(event) {
+		this.controlHandler(event.key);
+	}
+
+	onClickArrow(key: string) {
+		this.controlHandler(key);
+		return false;
+	}
+
+	onNoContext() {
+		return false;
+	}
+
+	//stores the next movement to an array to prevent turning 180.  without the queue, you could press up and right almost simultaneously to turn around
+	moveQueue = [];
+	controlHandler(key: string) {
 		if (this.playing) {
-			if (event.key === "ArrowUp" && this.snake.direction !== "down") {
+			if (key === "ArrowUp" && this.snake.direction !== "down") {
 				this.moveQueue[0] = "up";
-			} else if (
-				event.key === "ArrowDown" &&
-				this.snake.direction !== "up"
-			) {
+			} else if (key === "ArrowDown" && this.snake.direction !== "up") {
 				this.moveQueue[0] = "down";
 			} else if (
-				event.key === "ArrowRight" &&
+				key === "ArrowRight" &&
 				this.snake.direction !== "left"
 			) {
 				this.moveQueue[0] = "right";
 			} else if (
-				event.key === "ArrowLeft" &&
+				key === "ArrowLeft" &&
 				this.snake.direction !== "right"
 			) {
 				this.moveQueue[0] = "left";

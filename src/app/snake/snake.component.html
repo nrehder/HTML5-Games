@@ -18,7 +18,8 @@
 	<div fxLayout="row" fxLayoutAlign="center">
 		<mat-icon
 			style="cursor: pointer; font-size:48px;"
-			(click)="onkeypress({ key: 'ArrowUp' })"
+			(click)="onClickArrow('ArrowUp')"
+			(contextmenu)="onNoContext()"
 		>
 			keyboard_arrow_up
 		</mat-icon>
@@ -26,14 +27,16 @@
 	<div fxLayout="row" fxLayoutAlign="center">
 		<mat-icon
 			style="cursor: pointer; font-size:48px;"
-			(click)="onkeypress({ key: 'ArrowLeft' })"
+			(click)="onClickArrow('ArrowLeft')"
+			(contextmenu)="onNoContext()"
 		>
 			keyboard_arrow_left
 		</mat-icon>
 		<div style="min-width:50px"></div>
 		<mat-icon
 			style="cursor: pointer; font-size:48px;"
-			(click)="onkeypress({ key: 'ArrowRight' })"
+			(click)="onClickArrow('ArrowRight')"
+			(contextmenu)="onNoContext()"
 		>
 			keyboard_arrow_right
 		</mat-icon>
@@ -41,7 +44,8 @@
 	<div fxLayout="row" fxLayoutAlign="center">
 		<mat-icon
 			style="cursor: pointer; font-size:48px;"
-			(click)="onkeypress({ key: 'ArrowDown' })"
+			(click)="onClickArrow('ArrowDown')"
+			(contextmenu)="onNoContext()"
 		>
 			keyboard_arrow_down
 		</mat-icon>

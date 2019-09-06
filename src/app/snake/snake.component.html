@@ -15,4 +15,35 @@
 			#snake
 		></canvas>
 	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-icon
+			style="cursor: pointer; font-size:48px;"
+			(click)="onkeypress({ key: 'ArrowUp' })"
+		>
+			keyboard_arrow_up
+		</mat-icon>
+	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-icon
+			style="cursor: pointer; font-size:48px;"
+			(click)="onkeypress({ key: 'ArrowLeft' })"
+		>
+			keyboard_arrow_left
+		</mat-icon>
+		<div style="min-width:50px"></div>
+		<mat-icon
+			style="cursor: pointer; font-size:48px;"
+			(click)="onkeypress({ key: 'ArrowRight' })"
+		>
+			keyboard_arrow_right
+		</mat-icon>
+	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-icon
+			style="cursor: pointer; font-size:48px;"
+			(click)="onkeypress({ key: 'ArrowDown' })"
+		>
+			keyboard_arrow_down
+		</mat-icon>
+	</div>
 </app-game>

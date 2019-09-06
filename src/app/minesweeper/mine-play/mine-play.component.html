@@ -20,8 +20,25 @@
 		/>
 	</button>
 </div>
+<div class="controls">
+	<button mat-raised-button color="primary" (click)="onMenu()">
+		Menu
+	</button>
+	<button mat-raised-button color="accent" (click)="onNewGame()">
+		New Game
+	</button>
+	<mat-slider
+		min="0.5"
+		max="5"
+		step="0.05"
+		[(ngModel)]="zoomLevel"
+		(input)="zoomLevel = $event.value"
+		id="zoom"
+	></mat-slider>
+	{{ zoomLevel * 100 | number }}%
+</div>
 
-<div class="play-area">
+<div class="play-area" [style.zoom]="zoomLevel">
 	<div
 		*ngFor="let row of mineServ.board; let i = index"
 		fxLayout="row"
@@ -33,7 +50,12 @@
 			fxLayoutAlign="center space-around"
 			fxFlex="0 0 auto"
 			class="cell"
-			[ngClass]="{ revealed: cell.clicked, covered: !cell.clicked }"
+			[ngClass]="{
+				revealed: cell.clicked,
+				covered: !cell.clicked,
+				'first-cell': j === 0,
+				'last-cell': j === row.length - 1
+			}"
 			(contextmenu)="onFlag(i, j)"
 			(click)="onReveal(i, j)"
 		>
@@ -52,13 +74,4 @@
 			<p *ngIf="cell.clicked && cell.number > 0">{{ cell.number }}</p>
 		</div>
 	</div>
-</div>
-
-<div class="controls">
-	<button mat-raised-button color="primary" (click)="onMenu()">
-		Menu
-	</button>
-	<button mat-raised-button color="accent" (click)="onNewGame()">
-		New Game
-	</button>
 </div>

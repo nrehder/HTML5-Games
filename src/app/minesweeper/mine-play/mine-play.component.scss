@@ -1,12 +1,19 @@
 .play-area {
 	overflow-x: auto;
+	height: auto;
 }
 .play-row {
-	justify-content: center;
+	max-width: 100%;
 }
 .cell {
 	height: 20px;
 	width: 20px;
+}
+.first-cell {
+	margin-left: auto;
+}
+.last-cell {
+	margin-right: auto;
 }
 .cell.covered {
 	background-image: url("../../../assets/minesweeper/tile.ico");
@@ -30,4 +37,10 @@
 }
 button {
 	margin: 15px;
+}
+p {
+	margin: 0;
+	line-height: 20px;
+	min-width: 100%;
+	text-align: center;
 }

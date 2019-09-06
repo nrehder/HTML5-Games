@@ -9,6 +9,8 @@ import { take } from "rxjs/operators";
 	styleUrls: ["./mine-play.component.scss"],
 })
 export class MinePlayComponent implements OnInit {
+	zoomLevel: number = 1;
+
 	constructor(
 		public mineServ: MinesweeperService,
 		private vmService: VariableMessageService

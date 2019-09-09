@@ -26,6 +26,11 @@ export class MinePlayComponent implements OnInit {
 		this.mineServ.onReveal(row, col);
 		return false;
 	}
+	onDoubleClick(row: number, col: number) {
+		console.log(row + ", " + col);
+		this.mineServ.onDoubleClick(row, col);
+		return false;
+	}
 	onMenu() {
 		this.mineServ.displayGame = false;
 	}

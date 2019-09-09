@@ -51,19 +51,26 @@
 			fxFlex="0 0 auto"
 			class="cell"
 			[ngClass]="{
-				revealed: cell.clicked,
-				covered: !cell.clicked,
+				revealed: cell.revealed,
+				covered: !cell.revealed,
 				'first-cell': j === 0,
 				'last-cell': j === row.length - 1
 			}"
 			(contextmenu)="onFlag(i, j)"
 			(click)="onReveal(i, j)"
+			(dblclick)="onDoubleClick(i, j)"
 		>
 			<img
 				src="assets\minesweeper\flag.ico"
 				alt=""
 				style="height:20px;width:20px"
-				*ngIf="cell.flag"
+				*ngIf="cell.flag && !cell.badflag"
+			/>
+			<img
+				src="assets\minesweeper\badflag.ico"
+				alt=""
+				style="height:20px;width:20px"
+				*ngIf="cell.badflag"
 			/>
 			<img
 				src="assets\minesweeper\mine.ico"
@@ -71,7 +78,7 @@
 				style="height:20px;width:20px"
 				*ngIf="cell.mine && mineServ.explode"
 			/>
-			<p *ngIf="cell.clicked && cell.number > 0">{{ cell.number }}</p>
+			<p *ngIf="cell.revealed && cell.number > 0">{{ cell.number }}</p>
 		</div>
 	</div>
 </div>

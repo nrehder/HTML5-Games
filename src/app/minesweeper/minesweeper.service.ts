@@ -24,8 +24,9 @@ export class MinesweeperService {
 	board: {
 		mine: boolean;
 		flag: boolean;
-		clicked: boolean;
+		revealed: boolean;
 		number: number;
+		badflag: boolean;
 	}[][];
 
 	//Takes in the number of rows/columns/mines and creates a new game
@@ -94,7 +95,7 @@ export class MinesweeperService {
 	//checks if the game is running and if the cell hasn't been revealed
 	//before toggling the flag and changing the number of flags
 	onFlag(row: number, col: number) {
-		if (!this.board[row][col].clicked && this.playing) {
+		if (!this.board[row][col].revealed && this.playing) {
 			this.saveGame();
 			if (this.board[row][col].flag) {
 				this.board[row][col].flag = false;
@@ -132,7 +133,7 @@ export class MinesweeperService {
 		if (
 			!this.board[row][col].flag &&
 			this.playing &&
-			!this.board[row][col].clicked &&
+			!this.board[row][col].revealed &&
 			!this.checkMines(row, col)
 		) {
 			//checks the number.  If it is a 0 it triggers the cascade,
@@ -141,10 +142,49 @@ export class MinesweeperService {
 			if (this.board[row][col].number === 0) {
 				this.onCascade(row, col);
 			} else {
-				this.board[row][col].clicked = true;
+				this.board[row][col].revealed = true;
 			}
 			this.saveGame();
 			this.checkRemaining();
+		}
+	}
+
+	/*When an already revealed cell is double clicked, it checks to see if the
+	number of flags on neighboring cells matches the number for the clicked cell
+	If so, it reveals all other neighboring cells.  If a user has a wrong flag,
+	this can trigger a mine.*/
+	onDoubleClick(row: number, col: number) {
+		if (this.board[row][col].revealed) {
+			let numFlags = 0;
+			//Counts flags.  If statement prevents out of bounds checks
+			for (let i = -1; i < 2; i++) {
+				for (let j = -1; j < 2; j++) {
+					if (
+						row + i >= 0 &&
+						row + i < this.totalRows &&
+						col + j >= 0 &&
+						col + j < this.totalCols
+					) {
+						numFlags += this.board[row + i][col + j].flag ? 1 : 0;
+					}
+				}
+			}
+
+			//reveals all neighboring spaces.  Flags prevent the reveal
+			if (numFlags === this.board[row][col].number) {
+				for (let i = -1; i < 2; i++) {
+					for (let j = -1; j < 2; j++) {
+						if (
+							row + i >= 0 &&
+							row + i < this.totalRows &&
+							col + j >= 0 &&
+							col + j < this.totalCols
+						) {
+							this.onReveal(row + i, col + j);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -156,8 +196,9 @@ export class MinesweeperService {
 				this.board[row].push({
 					mine: false,
 					flag: false,
-					clicked: false,
+					revealed: false,
 					number: 0,
+					badflag: false,
 				});
 			}
 		}
@@ -222,7 +263,7 @@ export class MinesweeperService {
 				//adds to the count if the cell is revealed and not a mine
 				//a mine should never have been revealed, but its there just
 				//incase
-				if (this.board[row][col].clicked && !this.board[row][col].mine)
+				if (this.board[row][col].revealed && !this.board[row][col].mine)
 					count++;
 			}
 		}
@@ -239,6 +280,7 @@ export class MinesweeperService {
 		if (this.board[row][col].mine) {
 			this.explode = true;
 			this.playing = false;
+			this.checkFlags();
 			this.clearSaveData();
 			//This return prevents the cell from being revealed or a cascade
 			//from triggering
@@ -247,7 +289,18 @@ export class MinesweeperService {
 		return false;
 	}
 
-	//If the cell revealed is a 0 it cascade reveals other cells
+	//Checks the board to see if a flag is in the wrong spot
+	private checkFlags() {
+		for (let row = 0; row < this.totalRows; row++) {
+			for (let col = 0; col < this.totalCols; col++) {
+				if (this.board[row][col].flag && !this.board[row][col].mine) {
+					this.board[row][col].badflag = true;
+				}
+			}
+		}
+	}
+
+	//If the cell clicked is a 0 it cascade reveals other cells
 	//It should reveal all 0's and numbers touching a 0.
 	private onCascade(row: number, col: number) {
 		//saves row/col to a key/value ID for easy comparison (removes the
@@ -275,7 +328,7 @@ export class MinesweeperService {
 				!this.board[curRow][curCol].flag &&
 				!this.board[curRow][curCol].mine
 			) {
-				this.board[curRow][curCol].clicked = true;
+				this.board[curRow][curCol].revealed = true;
 
 				if (this.board[curRow][curCol].number === 0) {
 					//cycle through all neighbors

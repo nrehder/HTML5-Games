@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-yahtzee',
-  templateUrl: './yahtzee.component.html',
-  styleUrls: ['./yahtzee.component.scss']
+	selector: "app-yahtzee",
+	templateUrl: "./yahtzee.component.html",
+	styleUrls: ["./yahtzee.component.scss"],
 })
-export class YahtzeeComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class YahtzeeComponent {
+	title = "Yahtzee";
+	description = "A game of yahtzee";
 }

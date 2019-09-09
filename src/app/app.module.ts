@@ -20,6 +20,8 @@ import { MineMenuComponent } from "./minesweeper/mine-menu/mine-menu.component";
 import { VariableMessageComponent } from "./shared/variable-message/variable-message.component";
 import { FormsModule } from "@angular/forms";
 import { YahtzeeComponent } from './yahtzee/yahtzee.component';
+import { YahtMenuComponent } from './yahtzee/yaht-menu/yaht-menu.component';
+import { YahtGameComponent } from './yahtzee/yaht-game/yaht-game.component';
 
 @NgModule({
 	declarations: [
@@ -34,6 +36,8 @@ import { YahtzeeComponent } from './yahtzee/yahtzee.component';
 		MineMenuComponent,
 		VariableMessageComponent,
 		YahtzeeComponent,
+		YahtMenuComponent,
+		YahtGameComponent,
 	],
 	imports: [
 		BrowserModule,

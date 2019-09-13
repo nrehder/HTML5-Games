@@ -12,6 +12,7 @@ import {
 	MatGridListModule,
 	MatSlideToggleModule,
 	MatSliderModule,
+	MatTableModule,
 } from "@angular/material";
 
 const materialModules = [
@@ -27,6 +28,7 @@ const materialModules = [
 	MatGridListModule,
 	MatSlideToggleModule,
 	MatSliderModule,
+	MatTableModule,
 ];
 
 @NgModule({

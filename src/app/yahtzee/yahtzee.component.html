@@ -1,4 +1,14 @@
 <app-game [title]="title" [description]="description">
-	<app-yaht-game></app-yaht-game>
-	<app-yaht-menu></app-yaht-menu>
+	<app-yaht-game *ngIf="displayGame"></app-yaht-game>
+	<app-yaht-menu *ngIf="!displayGame"></app-yaht-menu>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<button
+			type="button"
+			mat-raised-button
+			color="primary"
+			(click)="displayGame = !displayGame"
+		>
+			Display Game
+		</button>
+	</div>
 </app-game>

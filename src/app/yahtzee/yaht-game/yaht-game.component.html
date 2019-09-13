@@ -1,1 +1,97 @@
-<p>yaht-game works!</p>
+<div fxLayout="row wrap" fxLayoutAlign="center">
+	<div fxLayout="column" class="play-area">
+		<div
+			fxLayout="row"
+			fxLayoutAlign="center space-between"
+			*ngIf="hasYahtzee"
+		>
+			<h1 style="font-weight: bold; font-size:32px;">YAHTZEE!!!</h1>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="center" *ngIf="currentDice[0] > 0">
+			<div
+				class="dice"
+				*ngFor="let die of currentDice; let i = index"
+				(click)="onToggleLock(i)"
+				[ngClass]="{ locked: lockedDice[i] }"
+			>
+				{{ die }}
+			</div>
+		</div>
+		<br />
+		<div fxLayout="row" fxLayoutAlign="center space-between">
+			<button
+				type="button"
+				mat-raised-button
+				color="primary"
+				(click)="onRollDice()"
+				[disabled]="rolling || roundRollsCount >= 3"
+			>
+				Roll Dice
+			</button>
+		</div>
+		<br />
+		<div fxLayout="row" fxLayoutAlign="center space-between">
+			<p>
+				Click roll dice to begin. Click on the score to the right to
+				score that category.
+			</p>
+		</div>
+	</div>
+	<div class="score-table">
+		<table>
+			<tr>
+				<th style="font-size:20px; line-height:28px">Category</th>
+				<th style="font-size:20px; line-height:28px">Score</th>
+			</tr>
+			<tr
+				class="score-row"
+				*ngFor="let score of scoreboardValues; let i = index"
+			>
+				<td
+					class="label"
+					[ngClass]="{
+						top: i === 0,
+						bottom: i === scoreboardValues.length - 1,
+						'top-bottom-bold':
+							score.category === 'Upper Total' ||
+							score.category === 'Lower Total' ||
+							score.category === 'Total'
+					}"
+				>
+					{{ score.category }}
+				</td>
+				<td
+					class="score"
+					*ngIf="score.scored"
+					[ngClass]="{
+						top: i === 0,
+						bottom: i === scoreboardValues.length - 1,
+						'top-bottom':
+							score.category === 'Upper Total' ||
+							score.category === 'Lower Total'
+					}"
+				>
+					{{ score.actual }}
+				</td>
+				<td
+					class="score preview"
+					*ngIf="!score.scored"
+					[ngClass]="{
+						top: i === 0,
+						bottom: i === scoreboardValues.length - 1,
+						'top-bottom':
+							score.category === 'Upper Total' ||
+							score.category === 'Lower Total'
+					}"
+					(click)="onSetScore(i)"
+				>
+					<div *ngIf="score.preview > 0">
+						{{ score.preview }}
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<br />
+<br />
